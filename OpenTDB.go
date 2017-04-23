@@ -15,6 +15,7 @@ func New(client fasthttp.Client) (trivia *Trivia){
 }
 
 func (getter *Getter) GetTrivia(i int) (q *Question, err error) {
+	q = &Question{}
 	stat, body, err := getter.Client.Get(nil, "https://opentdb.com/api.php?amount=" + strconv.Itoa(i))
 	if err != nil || stat != 200 {
 		return
