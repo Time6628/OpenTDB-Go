@@ -2,11 +2,9 @@ package OpenTDB_Go
 
 import (
 	"github.com/valyala/fasthttp"
-	"time"
 	"strconv"
 	"encoding/json"
 	"bytes"
-	"fmt"
 )
 
 func New(client fasthttp.Client) (trivia *Trivia){
