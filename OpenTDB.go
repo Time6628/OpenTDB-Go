@@ -24,7 +24,7 @@ func (getter *Getter) GetTrivia(i int) (Question, error) {
 	q := Question{}
 	stat, body, err := client.Get(nil, "https://opentdb.com/api.php?amount=" + strconv.Itoa(i))
 	if err != nil || stat != 200 {
-		return nil, errors.New("Could not obtain json response")
+		return q, errors.New("Could not obtain json response")
 	}
 	json.NewDecoder(bytes.NewReader(body)).Decode(q)
 	return q, nil
