@@ -4,16 +4,12 @@ import (
 	"github.com/valyala/fasthttp"
 	"time"
 	"strconv"
-	"errors"
 	"encoding/json"
 	"bytes"
+	"fmt"
 )
 
-var (
-	client = fasthttp.Client{ReadTimeout: time.Second * 10, WriteTimeout: time.Second * 10}
-)
-
-func New() (trivia *Trivia, err error){
+func New(client fasthttp.Client) (trivia *Trivia){
 	trivia = &Trivia{
 		Getter: Getter{Client: client},
 	}
@@ -21,9 +17,8 @@ func New() (trivia *Trivia, err error){
 }
 
 func (getter *Getter) GetTrivia(i int) (q *Question, err error) {
-	stat, body, err := client.Get(nil, "https://opentdb.com/api.php?amount=" + strconv.Itoa(i))
+	stat, body, err := getter.Client.Get(nil, "https://opentdb.com/api.php?amount=" + strconv.Itoa(i))
 	if err != nil || stat != 200 {
-		err = errors.New("Could not obtain json response")
 		return
 	}
 	json.NewDecoder(bytes.NewReader(body)).Decode(q)
