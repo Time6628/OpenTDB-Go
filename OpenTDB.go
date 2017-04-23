@@ -20,12 +20,12 @@ func New() (trivia *Trivia, err error){
 	return
 }
 
-func (getter *Getter) GetTrivia(i int) (Question, error) {
-	q := Question{}
+func (getter *Getter) GetTrivia(i int) (q Question, err error) {
 	stat, body, err := client.Get(nil, "https://opentdb.com/api.php?amount=" + strconv.Itoa(i))
 	if err != nil || stat != 200 {
-		return q, errors.New("Could not obtain json response")
+		err = errors.New("Could not obtain json response")
+		return
 	}
 	json.NewDecoder(bytes.NewReader(body)).Decode(q)
-	return q, nil
+	return
 }
