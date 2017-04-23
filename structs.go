@@ -12,7 +12,7 @@ type Getter struct {
 
 type Question struct {
 	Response int `json:"response_code"`
-	Results Results `json:"results"`
+	Results []Results `json:"results"`
 }
 
 type Results struct {
