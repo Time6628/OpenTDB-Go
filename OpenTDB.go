@@ -19,6 +19,9 @@ func (getter *Getter) GetTrivia(i int) (q *Question, err error) {
 	if err != nil || stat != 200 {
 		return
 	}
-	json.NewDecoder(bytes.NewReader(body)).Decode(q)
+	err = json.NewDecoder(bytes.NewReader(body)).Decode(q)
+	if err != nil {
+		panic(err)
+	}
 	return
 }

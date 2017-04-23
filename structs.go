@@ -12,10 +12,10 @@ type Getter struct {
 
 type Question struct {
 	Response int `json:"response_code"`
-	Results []Results `json:"results"`
+	Results []Result `json:"results"`
 }
 
-type Results struct {
+type Result struct {
 	Category string `json:"category"`
 	Type string `json:"type"`
 	Difficulty string `json:"difficulty"`
