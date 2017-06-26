@@ -42,6 +42,26 @@ func (getter *Getter) GetTriviaWithCategory(i int, cat int) (q *Question, err er
 	return
 }
 
+func (getter *Getter) GetTriviaWithDifficulty(i int, difficulty string) (q *Question, err error) {
+	q = &Question{}
+	body := getter.Request(base + strconv.Itoa(i) + with_difficulty + difficulty)
+	err = json.NewDecoder(bytes.NewReader(body)).Decode(q)
+	if err != nil {
+		panic(err)
+	}
+	return
+}
+
+func (getter *Getter) GetTriviaWithType(i int, ty string) (q *Question, err error) {
+	q = &Question{}
+	body := getter.Request(base + strconv.Itoa(i) + with_type + ty)
+	err = json.NewDecoder(bytes.NewReader(body)).Decode(q)
+	if err != nil {
+		panic(err)
+	}
+	return
+}
+
 func (getter *Getter) GetTriviaWithToken(i int, token string) (q * Question, err error) {
 	q = &Question{}
 	body := getter.Request(base + strconv.Itoa(i) + with_token + token)

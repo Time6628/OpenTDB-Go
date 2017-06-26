@@ -45,4 +45,5 @@ const (
 	with_token = "&token="
 	with_cat = "&category="
 	with_difficulty = "&difficulty="
+	with_type = "&type="
 )
