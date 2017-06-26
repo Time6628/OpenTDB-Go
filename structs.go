@@ -24,3 +24,9 @@ type Result struct {
 	IncorrectAnswer []string `json:"incorrect_answers"`
 }
 
+type Token struct {
+	Response int `json:"response_code"`
+	ResponseMessage string `json:"response_message"`
+	Token string `json:"token"`
+}
+
