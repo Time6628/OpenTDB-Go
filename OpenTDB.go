@@ -14,13 +14,68 @@ func New(client fasthttp.Client) (trivia *Trivia){
 	return
 }
 
-func (getter *Getter) GetTrivia(i int) (q *Question, err error) {
-	q = &Question{}
-	stat, body, err := getter.Client.Get(nil, "https://opentdb.com/api.php?amount=" + strconv.Itoa(i))
+func (getter *Getter) Request(url string) (body []byte) {
+	stat, body, err := getter.Client.Get(nil, url)
 	if err != nil || stat != 200 {
 		return
 	}
+	return
+}
+
+func (getter *Getter) GetTrivia(i int) (q *Question, err error) {
+	q = &Question{}
+	body := getter.Request(base + strconv.Itoa(i))
 	err = json.NewDecoder(bytes.NewReader(body)).Decode(q)
+	if err != nil {
+		panic(err)
+	}
+	return
+}
+
+func (getter *Getter) GetTriviaWithCategory(i int, cat int) (q *Question, err error) {
+	q = &Question{}
+	body := getter.Request(base + strconv.Itoa(i) + with_cat + strconv.Itoa(cat))
+	err = json.NewDecoder(bytes.NewReader(body)).Decode(q)
+	if err != nil {
+		panic(err)
+	}
+	return
+}
+
+func (getter *Getter) GetTriviaWithDifficulty(i int, difficulty string) (q *Question, err error) {
+	q = &Question{}
+	body := getter.Request(base + strconv.Itoa(i) + with_difficulty + difficulty)
+	err = json.NewDecoder(bytes.NewReader(body)).Decode(q)
+	if err != nil {
+		panic(err)
+	}
+	return
+}
+
+func (getter *Getter) GetTriviaWithType(i int, ty string) (q *Question, err error) {
+	q = &Question{}
+	body := getter.Request(base + strconv.Itoa(i) + with_type + ty)
+	err = json.NewDecoder(bytes.NewReader(body)).Decode(q)
+	if err != nil {
+		panic(err)
+	}
+	return
+}
+
+func (getter *Getter) GetTriviaWithToken(i int, token string) (q * Question, err error) {
+	q = &Question{}
+	body := getter.Request(base + strconv.Itoa(i) + with_token + token)
+	err = json.NewDecoder(bytes.NewReader(body)).Decode(q)
+	if err != nil {
+		panic(err)
+	}
+	return
+}
+
+func (getter *Getter) GetToken() (token *Token){
+	token = &Token{}
+	body := getter.Request(req_token)
+	err := json.NewDecoder(bytes.NewReader(body)).Decode(token)
 	if err != nil {
 		panic(err)
 	}
